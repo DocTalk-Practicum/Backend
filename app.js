@@ -21,10 +21,7 @@ app.use('/images', express.static(path.join(__dirname + '/Images')));
 app.use("/auth", require("./routes/auth"));
 
 /* -------------------------------------------------------------------------- */
-
-if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
-}
 
 /* ------------------------------ Server Setup ------------------------------ */
 const PORT = process.env.PORT || 8000;

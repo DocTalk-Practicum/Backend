@@ -9,7 +9,7 @@ const sendEmail = async options => {
             user: process.env.EMAIL, 
             pass: process.env.PASSWORD, 
         },
-        from: "jshivansh277@gmail.com",
+        from: "doctalkpracticum@gmail.com",
         tls:{
             rejectUnauthorized:false
         }
@@ -17,7 +17,7 @@ const sendEmail = async options => {
 
     // 2) Define the email options
     const mailOptions = {
-        from: 'Support <jshivansh277@gmail.com>',
+        from: 'DOcTalk Verify <doctalkpracticum@gmail.com>',
         to: "shivanshjoshi277@gmail.com",
         subject: options.subject,
         text: options.message,

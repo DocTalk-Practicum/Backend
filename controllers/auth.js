@@ -81,7 +81,7 @@ const doctorRegister = async (req, res) => {
         });
 
         await doctor.save();
-        const resetURL = `${req.protocol}://${req.get("host")}/auth/verifyDoctor${doctor._id}`;
+        const resetURL = `${req.protocol}://${req.get("host")}/auth/verifyDoctor/${doctor._id}`;
         
         const message = `Doctor Details - ${doctor.firstName} ${doctor.lastName} \n Email: ${doctor.email} \n Phone Number: ${doctor.phn} \n Age: ${doctor.age} \n Gender: ${doctor.gender} \n Speciality: ${doctor.speciality} \n clinicName: ${doctor.clinicName} \n clinicAddress: ${doctor.clinicAddress} \n clinicMap: ${doctor.clinicMap}\n Click on the link to verify account: ${resetURL}`;
         
