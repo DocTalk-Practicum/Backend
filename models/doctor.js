@@ -21,14 +21,20 @@ const doctorSchema = new Schema({
   age: Number,
   gender: String,
   pic: String,
+  documents: String,
   description: String,
-  validation: String,
+  validation: {
+    type: Boolean,
+    default: false
+  },
   speciality: String,
   clinicName: String,
   clinicAddress: String,
   clinicMap: String,
+},{
+  timestamps: true
 });
 
-const Patient = mongoose.model("Patient", patientSchema);
+const Doctor = mongoose.model("Doctor", doctorSchema);
 
-module.exports = Patient;
+module.exports = Doctor;
