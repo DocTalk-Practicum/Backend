@@ -2,6 +2,8 @@ const Patient = require("../models/user");
 const Doctor = require("../models/doctor");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const sendEmail = require("../utils/email");
+const path = require("path");
 
 const patientRegister = async (req, res, next) => {
   try {
@@ -21,10 +23,12 @@ const patientRegister = async (req, res, next) => {
         }
 
         let patient = new Patient({
-          name: req.body.name,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
           email: req.body.email,
           phn: req.body.phn,
-          photo: req.body.photo,
+          age: req.body.age,
+          gender: req.body.gender,
           password: hashedPassword,
         });
 
@@ -60,18 +64,46 @@ const doctorRegister = async (req, res) => {
         }
 
         let doctor = new Doctor({
-          name: req.body.name,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
           email: req.body.email,
           phn: req.body.phn,
-          photo: req.body.photo,
+          age: req.body.age,
+          gender: req.body.gender,
           password: hashedPassword,
+          pic: `/images/${req.files[0].filename.replace(/ /g, "_")}`,
+          documents: `/images/${req.files[1].filename.replace(/ /g, "_")}`,
+          description: req.body.description,
+          speciality: req.body.speciality,
+          clinicName: req.body.clinicName,
+          clinicAddress: req.body.clinicAddress,
+          clinicMap: req.body.clinicMap
         });
 
         await doctor.save();
+        const resetURL = `${req.protocol}://${req.get("host")}/auth/verifyDoctor/${doctor._id}`;
+        
+        const message = `Doctor Details - ${doctor.firstName} ${doctor.lastName} \n Email: ${doctor.email} \n Phone Number: ${doctor.phn} \n Age: ${doctor.age} \n Gender: ${doctor.gender} \n Speciality: ${doctor.speciality} \n clinicName: ${doctor.clinicName} \n clinicAddress: ${doctor.clinicAddress} \n clinicMap: ${doctor.clinicMap}\n Click on the link to verify account: ${resetURL}`;
+        
+        const attachment = [{
+          filename: req.files[0].filename,
+          path: path.join(__dirname, `../Images/${req.files[0].filename}`)
+        },{
+          filename: req.files[1].filename,
+          path: path.join(__dirname, `../Images/${req.files[1].filename}`)
+        }]
+        
+        await sendEmail({
+          subject: "Verify Documents and get started",
+          message,
+          attachment
+        })
+        
       });
+
       res.status(200).json({
         status: "success",
-        message: "Successfully registered Doctor ",
+        message: "Successfully registered Doctor and Email sent to admin",
       });
     }
   } catch (error) {
@@ -119,6 +151,11 @@ const login = async (req, res, next) => {
           message: "Email Id is Invalid",
         });
       }
+      if(!doctor.validation){
+        return res.status(400).json({
+          message: "Account is not verified yet please wait for admin to verify your account",
+        });
+      }
       bcrypt.compare(password, doctor.password, (err, result) => {
         if (err) {
           res.status(400).json({
@@ -145,6 +182,26 @@ const login = async (req, res, next) => {
     }
   });
 };
+
+const verifyDoctor = async (req, res) => {
+  const id = req.params.id;
+  const doctor = await Doctor.findById(id);
+  if(!doctor){
+    return res.status(404).json({
+      message: "Doctor not found",
+    });
+  }
+  if(doctor.validation){
+    return res.status(400).json({
+      message: "Doctor already verified",
+    });
+  }
+  doctor.validation = true;
+  await doctor.save();
+  res.status(200).json({
+    message: "Doctor verified successfully",
+  });
+}
 
 /* ----------------------- DashBoard Protection Route ----------------------- */
 
@@ -206,5 +263,6 @@ module.exports = {
   patientRegister,
   doctorRegister,
   login,
+  verifyDoctor,
   authPass,
 };
