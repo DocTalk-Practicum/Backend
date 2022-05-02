@@ -24,6 +24,7 @@ app.use(morgan("dev"));
 app.use("/images", express.static(path.join(__dirname + "/Images")));
 app.use("/auth", require("./routes/auth"));
 app.use("/patient", require("./routes/patient"));
+app.use("/doctor", require("./routes/doctor"));
 app.use("/conversation", require("./routes/conversation"));
 app.use("/message", require("./routes/messages"));
 

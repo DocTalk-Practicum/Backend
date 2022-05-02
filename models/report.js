@@ -13,7 +13,10 @@ const reportSchema = new mongoose.Schema(
     date: String,
     time: String,
     reasonForVisit: String,
-    medicalFiles: String,
+    medicalFiles: {
+      type: Array,
+      default: [],
+    },
   },
   { timestamps: true }
 );

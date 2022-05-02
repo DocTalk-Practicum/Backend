@@ -222,11 +222,11 @@ const authPass = async (req, res, next) => {
     token = req.cookies.jwt;
   }
 
-  if (!token) {
-    return res.status(400).json({
-      message: "You aren't Logged In",
+  if (!token || token === "null") {
+    return res.status(200).json({
+        message: "You aren't Logged In",
     });
-  }
+}
 
   // 2) Verification token
   const decoded = await jwt.verify(token, process.env.JWT_SECRET);

@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const upload = require("../middlewares/multer");
-const authController = require("../controllers/auth");
+const {patientRegister,verifyDoctor,doctorRegister,login} = require("../controllers/auth");
 
-router.post("/patientRegister", authController.patientRegister);
+router.post("/patientRegister", patientRegister);
 router.post(
   "/doctorRegister",
   upload.array("files", 2),
-  authController.doctorRegister
+  doctorRegister
 );
-router.post("/login", authController.login);
-router.get("/verifyDoctor/:id", authController.verifyDoctor);
+router.post("/login", login);
+router.get("/verifyDoctor/:id", verifyDoctor);
 
 module.exports = router;
