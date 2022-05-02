@@ -57,11 +57,11 @@ router.get("/getDoctors/:userId", async (req, res) => {
   for (var i = 0; i < conversation.length; i++) {
     const convo = conversation[i];
 
-    const teacherId = convo.members[1];
+    const doctorId = convo.members[1];
 
     for (var j = 0; j < fullPremiumData.length; j++) {
       const t = fullPremiumData[j];
-      if (t.doctor._id == teacherId) {
+      if (t.doctor._id == doctorId) {
         t.convoId = convo._id;
       }
     }
