@@ -7,9 +7,9 @@ const router = require("express").Router();
 
 //new conv
 
-router.get("/getStudents/:userId", async (req, res) => {
-  const students = await Patient.find();
-  // console.log("All teachers", students);
+router.get("/getPatients/:userId", async (req, res) => {
+  const patients = await Patient.find();
+  // console.log("All doctors", patients);
   const conversation = await Conversation.find({
     members: { $in: [req.params.userId] },
   });
@@ -18,10 +18,10 @@ router.get("/getStudents/:userId", async (req, res) => {
   for (var i = 0; i < conversation.length; i++) {
     const convo = conversation[i];
 
-    const studentId = convo.members[0];
+    const patientId = convo.members[0];
 
     console.log("Before", fullPremiumData);
-    const patient = await Patient.findOne({ _id: studentId });
+    const patient = await Patient.findOne({ _id: patientId });
     console.log("Patient", patient);
     var data = {
       doctor: patient,
@@ -37,16 +37,16 @@ router.get("/getStudents/:userId", async (req, res) => {
   });
 });
 
-router.get("/getTeachers/:userId", async (req, res) => {
-  const teachers = await Doctor.find();
-  console.log("All teachers", teachers);
+router.get("/getDoctors/:userId", async (req, res) => {
+  const doctors = await Doctor.find();
+  console.log("All doctors", doctors);
   const conversation = await Conversation.find({
     members: { $in: [req.params.userId] },
   });
   var fullPremiumData = [];
 
-  for (var i = 0; i < teachers.length; i++) {
-    const t = teachers[i];
+  for (var i = 0; i < doctors.length; i++) {
+    const t = doctors[i];
     var data = {
       doctor: t,
       convoId: "",
@@ -69,7 +69,7 @@ router.get("/getTeachers/:userId", async (req, res) => {
 
     //   console.log("This is fulldata", fullPremiumData);
   }
-  if (teachers.length == 0) {
+  if (doctors.length == 0) {
     return res.send("No Doctor Found");
   }
 

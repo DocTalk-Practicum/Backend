@@ -35,5 +35,5 @@ const reportUpload = async (req, res) => {
 };
 
 module.exports = {
-  doctorRegister,
+  reportUpload,
 };
