@@ -48,6 +48,7 @@ const patientRegister = async (req, res, next) => {
 };
 const doctorRegister = async (req, res) => {
 	try {
+		// console.log(req.files);
 		const doctor = await Doctor.findOne({ email: req.body.email });
 		if (doctor) {
 			return res.status(400).json({
@@ -229,11 +230,11 @@ const authPass = async (req, res, next) => {
 		token = req.cookies.jwt;
 	}
 
-  if (!token || token === "null") {
-    return res.status(200).json({
-        message: "You aren't Logged In",
-    });
-}
+	if (!token || token === 'null') {
+		return res.status(200).json({
+			message: "You aren't Logged In"
+		});
+	}
 
 	// 2) Verification token
 	const decoded = await jwt.verify(token, process.env.JWT_SECRET);
