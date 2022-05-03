@@ -23,8 +23,7 @@ const patientRegister = async (req, res, next) => {
 				}
 
 				let patient = new Patient({
-					firstName: req.body.firstName,
-					lastName: req.body.lastName,
+					name: req.body.name,
 					email: req.body.email,
 					phn: req.body.phn,
 					age: req.body.age,
@@ -65,8 +64,7 @@ const doctorRegister = async (req, res) => {
 				}
 
 				let doctor = new Doctor({
-					firstName: req.body.firstName,
-					lastName: req.body.lastName,
+					name: req.body.name,
 					email: req.body.email,
 					phn: req.body.phn,
 					age: req.body.age,
@@ -86,7 +84,7 @@ const doctorRegister = async (req, res) => {
 					'host'
 				)}/auth/verifyDoctor/${doctor._id}`;
 
-				const message = `Doctor Details - ${doctor.firstName} ${doctor.lastName} \n Email: ${doctor.email} \n Phone Number: ${doctor.phn} \n Age: ${doctor.age} \n Gender: ${doctor.gender} \n Speciality: ${doctor.speciality} \n clinicName: ${doctor.clinicName} \n clinicAddress: ${doctor.clinicAddress} \n clinicMap: ${doctor.clinicMap}\n Click on the link to verify account: ${resetURL}`;
+				const message = `Doctor Details - ${doctor.name} \n Email: ${doctor.email} \n Phone Number: ${doctor.phn} \n Age: ${doctor.age} \n Gender: ${doctor.gender} \n Speciality: ${doctor.speciality} \n clinicName: ${doctor.clinicName} \n clinicAddress: ${doctor.clinicAddress} \n clinicMap: ${doctor.clinicMap}\n Click on the link to verify account: ${resetURL}`;
 
 				const attachment = [
 					{

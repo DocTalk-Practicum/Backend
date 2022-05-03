@@ -3,17 +3,13 @@ const Schema = mongoose.Schema;
 
 const doctorSchema = new Schema(
 	{
-		firstName: {
+		name: {
 			type: String,
-			required: [true, 'A patient must have a first name']
-		},
-		lastName: {
-			type: String,
-			required: [true, 'A patient must have a last name']
+			required: [true, 'A doctor must have a name']
 		},
 		email: {
 			type: String,
-			required: [true, 'A patient must have an email'],
+			required: [true, 'A doctor must have an email'],
 			unique: true
 		},
 		password: {
@@ -22,15 +18,15 @@ const doctorSchema = new Schema(
 		},
 		phn: {
 			type: Number,
-			required: [true, 'A patient must have a phone number']
+			required: [true, 'A doctor must have a phone number']
 		},
 		age: {
 			type: Number,
-			required: [true, 'A patient must enter age']
+			required: [true, 'A doctor must enter age']
 		},
 		gender: {
 			type: String,
-			required: [true, 'A patient must enter their gender']
+			required: [true, 'A doctor must enter their gender']
 		},
 		pic: String,
 		documents: String,
