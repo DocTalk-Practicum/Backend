@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const upload = require("../middlewares/multer");
-const {patientRegister,verifyDoctor,doctorRegister,login} = require("../controllers/auth");
+const {patientRegister,verifyDoctor,doctorRegister,login,profile,editProfile,authPass} = require("../controllers/auth");
 
 router.post("/patientRegister", patientRegister);
 router.post(
@@ -11,5 +11,7 @@ router.post(
 );
 router.post("/login", login);
 router.get("/verifyDoctor/:id", verifyDoctor);
+router.get("/profile",authPass, profile);
+router.put("/editProfile",authPass, editProfile);
 
 module.exports = router;

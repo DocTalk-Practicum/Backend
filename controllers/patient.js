@@ -67,7 +67,30 @@ const getAllReports = async (req, res) => {
   }
 }
 
+const getPatientById = async (req, res) => {
+  try {
+    const patient = await Patient.findById(req.params.id);
+    if(patient){
+      res.status(200).json({
+        status: "success",
+        data: patient,
+      })
+    }else{
+      res.status(404).json({
+        status: "error",
+        message: "No Patient Found",
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "Failure",
+      message: error,
+    });
+  }
+}
+
 module.exports = {
   reportUpload,
-  getAllReports
+  getAllReports,
+  getPatientById
 };

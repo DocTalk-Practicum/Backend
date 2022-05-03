@@ -18,7 +18,7 @@ const sendEmail = async options => {
     // 2) Define the email options
     const mailOptions = {
         from: 'DOcTalk Verify <doctalkpracticum@gmail.com>',
-        to: "shivanshjoshi277@gmail.com",
+        to: ["shivanshjoshi277@gmail.com","parasthind299@gmail.com"],
         subject: options.subject,
         text: options.message,
         attachments: options.attachment

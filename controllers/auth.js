@@ -211,8 +211,6 @@ const verifyDoctor = async (req, res) => {
 	});
 };
 
-/* ----------------------- DashBoard Protection Route ----------------------- */
-
 const authPass = async (req, res, next) => {
 	// 1) Getting token and check of it's there
 	let token;
@@ -267,10 +265,32 @@ const authPass = async (req, res, next) => {
 	next();
 };
 
+const profile = async (req, res) => {
+	const user = req.user;
+	res.status(200).json({
+		status: 'success',
+		data: user
+	});
+}
+
+const editProfile = async (req, res) => {
+	const u = req.user;
+	const user = await Patient.findById(u._id);
+	let userUpdate;
+	userUpdate = await Patient.findByIdAndUpdate(user._id, req.body, { new: true })
+	await user.save();
+	res.status(200).json({
+		status: 'success',
+		data: userUpdate
+	});
+}
+
 module.exports = {
 	patientRegister,
 	doctorRegister,
 	login,
 	verifyDoctor,
-	authPass
+	authPass,
+	profile,
+	editProfile
 };

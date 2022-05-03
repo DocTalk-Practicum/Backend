@@ -111,10 +111,25 @@ const uploadPrescription = async (req, res) => {
     }
 }
 
+const getDoctorById = async (req, res) => {
+	const id = req.params.id;
+	const doctor = await Doctor.findById(id);
+	if (!doctor) {
+		return res.status(404).json({
+			message: 'Doctor not found'
+		});
+	}
+	res.status(200).json({
+		status: 'success',
+		data: doctor
+	});
+}
+
 module.exports = {
     getAllDoctors,
     getAppointments,
     getReferedAppointments,
     referDoctor,
-    uploadPrescription
+    uploadPrescription,
+    getDoctorById
 }
