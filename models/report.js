@@ -17,6 +17,14 @@ const reportSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    referedDoctor:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Doctor",
+    },
+    prescription:{
+      type: Array,
+      default: [],
+    }
   },
   { timestamps: true }
 );

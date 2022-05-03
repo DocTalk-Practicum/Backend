@@ -47,7 +47,7 @@ const reportUpload = async (req, res) => {
 
 const getAllReports = async (req, res) => {
   try {
-    const reports = await Report.find({ patientId: req.user.id }).populate("DoctorId");
+    const reports = await Report.find({ patientId: req.user.id }).populate("DoctorId").populate("referedDoctor");
     if(reports){
       res.status(200).json({
         status: "success",
