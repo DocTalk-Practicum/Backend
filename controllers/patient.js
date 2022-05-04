@@ -5,18 +5,14 @@ const Report = require('../models/report');
 const reportUpload = async (req, res) => {
 	try {
 		const { date, time, DoctorId, reasonForVisit } = req.body;
+		console.log(req.body);
 		const doctor = await Doctor.findById(DoctorId);
+		console.log(doctor);
 		if (!doctor) {
-			return res.status(404).json({
-				status: 'error',
-				message: 'Doctor Doesnt Exist'
-			});
+			throw new Error('Doctor Doesnt Exist');
 		} else {
-			if (req.files.length > 5) {
-				return res.status(400).json({
-					status: 'error',
-					message: 'Maximum 5 files are allowed'
-				});
+			if (req.files && req.files.length > 5) {
+				throw new Error('Maximum 5 files are allowed');
 			}
 			let report = new Report({
 				date,
@@ -27,12 +23,15 @@ const reportUpload = async (req, res) => {
 				// medicalFiles: `/images/${req.files[0].filename.replace(/ /g, "_")}`,
 			});
 
-			for (let i = 0; i < req.files.length; i++) {
-				report.medicalFiles.push(
-					`/images/${req.files[i].filename.replace(/ /g, '_')}`
-				);
+			if (req.files) {
+				for (let i = 0; i < req.files.length; i++) {
+					report.medicalFiles.push(
+						`/images/${req.files[i].filename.replace(/ /g, '_')}`
+					);
+				}
 			}
 
+			console.log(report);
 			await report.save();
 			res.status(200).json({
 				status: 'success',
@@ -40,6 +39,7 @@ const reportUpload = async (req, res) => {
 			});
 		}
 	} catch (error) {
+		console.log(error);
 		res.status(500).json({
 			status: 'Failure',
 			message: error
