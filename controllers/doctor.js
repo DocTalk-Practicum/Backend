@@ -6,7 +6,7 @@ const getAllDoctors = async (req, res) => {
 		const doctors = await Doctor.find({ verified: true });
 		res.status(200).json({
 			status: 'success',
-			data: doctors
+			doctors
 		});
 	} catch (error) {
 		res.status(500).json({
@@ -20,6 +20,7 @@ const getAppointments = async (req, res) => {
 	try {
 		const appointments = await Report.find({ docId: req.user.id })
 			.populate('patientId')
+			.populate('DoctorId')
 			.populate('referedDoctor');
 		if (appointments) {
 			res.status(200).json({
