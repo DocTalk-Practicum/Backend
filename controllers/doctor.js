@@ -24,7 +24,7 @@ const getAppointments = async (req, res) => {
 		if (appointments) {
 			res.status(200).json({
 				status: 'success',
-				data: appointments
+				appointments
 			});
 		} else {
 			res.status(404).json({
@@ -121,14 +121,15 @@ const getDoctorById = async (req, res) => {
 	const id = req.params.id;
 	const doctor = await Doctor.findById(id);
 	if (!doctor) {
-		return res.status(404).json({
+		return {
 			message: 'Doctor not found'
-		});
+		};
 	}
-	res.status(200).json({
+	return {
 		status: 'success',
-		user: doctor
-	});
+		user: doctor,
+		isPatient: false
+	};
 };
 
 module.exports = {

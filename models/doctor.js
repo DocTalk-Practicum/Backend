@@ -28,6 +28,10 @@ const doctorSchema = new Schema(
 			type: String,
 			required: [true, 'A doctor must enter their gender']
 		},
+		role: {
+			type: String,
+			default: 'Doctor'
+		},
 		pic: String,
 		documents: String,
 		description: String,

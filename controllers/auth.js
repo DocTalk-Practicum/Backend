@@ -267,21 +267,23 @@ const profile = async (req, res) => {
 	const user = req.user;
 	res.status(200).json({
 		status: 'success',
-		data: user
+		user: user
 	});
-}
+};
 
 const editProfile = async (req, res) => {
 	const u = req.user;
 	const user = await Patient.findById(u._id);
 	let userUpdate;
-	userUpdate = await Patient.findByIdAndUpdate(user._id, req.body, { new: true })
+	userUpdate = await Patient.findByIdAndUpdate(user._id, req.body, {
+		new: true
+	});
 	await user.save();
 	res.status(200).json({
 		status: 'success',
 		data: userUpdate
 	});
-}
+};
 
 module.exports = {
 	patientRegister,

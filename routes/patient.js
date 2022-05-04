@@ -6,6 +6,6 @@ const upload = require("../middlewares/multer");
 
 router.post("/uploadReport", upload.array("files", 5),authPass, reportUpload);
 router.get("/getAllReports",authPass, getAllReports);
-router.get("/getPatientById/:id",authPass, getPatientById);
+// router.get("/getPatientById/:id",authPass, getPatientById);
 
 module.exports = router;

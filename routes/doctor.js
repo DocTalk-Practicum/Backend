@@ -9,7 +9,7 @@ router.get("/getAppointments", authPass, getAppointments);
 router.get("/getReferedAppointments", authPass, getReferedAppointments);
 router.post("/referDoctor", authPass, referDoctor);
 router.post("/uploadPrescription", upload.array("files", 5),authPass, uploadPrescription);
-router.get("/getDoctorById/:id", authPass, getDoctorById);
+// router.get("/getDoctorById/:id", authPass, getDoctorById);
 
 
 module.exports = router;

@@ -71,25 +71,26 @@ const getAllReports = async (req, res) => {
 	}
 };
 
-const getPatientById = async (req, res) => {
+const getPatientById = async (req, res, next) => {
 	try {
 		const patient = await Patient.findById(req.params.id);
 		if (patient) {
-			res.status(200).json({
+			return {
 				status: 'success',
-				user: patient
-			});
+				user: patient,
+				isPatient: true
+			};
 		} else {
-			res.status(404).json({
+			return {
 				status: 'error',
 				message: 'No Patient Found'
-			});
+			};
 		}
 	} catch (error) {
-		res.status(500).json({
+		return {
 			status: 'Failure',
 			message: error
-		});
+		};
 	}
 };
 

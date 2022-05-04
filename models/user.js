@@ -26,6 +26,10 @@ const patientSchema = new Schema({
 	gender: {
 		type: String,
 		required: [true, 'A patient must enter their gender']
+	},
+	role: {
+		type: String,
+		default: 'Patient'
 	}
 });
 
