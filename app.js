@@ -27,7 +27,7 @@ app.use("/patient", require("./routes/patient"));
 app.use("/doctor", require("./routes/doctor"));
 app.use("/conversation", require("./routes/conversation"));
 app.use("/message", require("./routes/messages"));
-
+app.use("/documents", require("./routes/documents"));
 /* -------------------------------------------------------------------------- */
 
 /* ------------------------------ Server Setup ------------------------------ */

@@ -7,7 +7,7 @@ const reportUpload = async (req, res) => {
 		const { date, time, DoctorId, reasonForVisit } = req.body;
 		console.log(req.body);
 		const doctor = await Doctor.findById(DoctorId);
-		console.log(doctor);
+		console.log(req.files);
 		if (!doctor) {
 			throw new Error('Doctor Doesnt Exist');
 		} else {

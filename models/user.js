@@ -30,7 +30,13 @@ const patientSchema = new Schema({
 	role: {
 		type: String,
 		default: 'Patient'
-	}
+	},
+	documents: [
+		{
+		  type: mongoose.Schema.Types.ObjectId,
+		  ref: "Document",
+		},
+	  ],
 });
 
 const Patient = mongoose.model('Patient', patientSchema);

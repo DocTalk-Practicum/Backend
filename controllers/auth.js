@@ -47,7 +47,8 @@ const patientRegister = async (req, res, next) => {
 };
 const doctorRegister = async (req, res) => {
 	try {
-		// console.log(req.files);
+		console.log(req.files);
+		console.log(req.body);
 		const doctor = await Doctor.findOne({ email: req.body.email });
 		if (doctor) {
 			return res.status(400).json({
@@ -104,7 +105,7 @@ const doctorRegister = async (req, res) => {
 				});
 			});
 
-			res.status(200).json({
+			return res.status(200).json({
 				status: 'success',
 				message: 'Successfully registered Doctor and Email sent to admin'
 			});
@@ -222,11 +223,9 @@ const authPass = async (req, res, next) => {
 
 		token = req.headers.authorization.split(' ')[1];
 		// console.log(token);
-	} else if (req.cookies.jwt) {
-		token = req.cookies.jwt;
 	}
 
-	if (!token || token === 'null') {
+	if (!token || token === null || token == undefined) {
 		return res.status(200).json({
 			message: "You aren't Logged In"
 		});

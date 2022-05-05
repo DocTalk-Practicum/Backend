@@ -3,7 +3,7 @@ const Report = require('../models/report');
 
 const getAllDoctors = async (req, res) => {
 	try {
-		const doctors = await Doctor.find({ verified: true });
+		const doctors = await Doctor.find({ validation: true });
 		res.status(200).json({
 			status: 'success',
 			doctors
@@ -18,7 +18,8 @@ const getAllDoctors = async (req, res) => {
 
 const getAppointments = async (req, res) => {
 	try {
-		const appointments = await Report.find({ docId: req.user.id })
+		console.log(req.user.id)
+		const appointments = await Report.find({ DoctorId: req.user.id })
 			.populate('patientId')
 			.populate('DoctorId')
 			.populate('referedDoctor');
