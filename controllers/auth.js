@@ -132,9 +132,13 @@ const login = async (req, res, next) => {
 					});
 				}
 				if (result) {
-					var token = jwt.sign({ id: patient._id }, process.env.JWT_SECRET, {
-						expiresIn: '2d'
-					});
+					var token = jwt.sign(
+						{ id: patient._id, isPatient: true },
+						process.env.JWT_SECRET,
+						{
+							expiresIn: '2d'
+						}
+					);
 
 					res.status(200).json({
 						status: 'success',
@@ -170,9 +174,13 @@ const login = async (req, res, next) => {
 					});
 				}
 				if (result) {
-					var token = jwt.sign({ id: doctor._id }, process.env.JWT_SECRET, {
-						expiresIn: '2h'
-					});
+					var token = jwt.sign(
+						{ id: doctor._id, isPatient: false },
+						process.env.JWT_SECRET,
+						{
+							expiresIn: '2h'
+						}
+					);
 					res.status(200).json({
 						status: 'success',
 						message: 'Logged In successfully',

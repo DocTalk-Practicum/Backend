@@ -45,6 +45,7 @@ const getAppointments = async (req, res) => {
 const referDoctor = async (req, res) => {
 	try {
 		const refered = await Doctor.findById(req.body.docId);
+		console.log(refered);
 		const report = await Report.findById(req.body.reportId);
 		report.referedDoctor = refered._id;
 		await report.save();
@@ -60,6 +61,7 @@ const referDoctor = async (req, res) => {
 			});
 		}
 	} catch (error) {
+		console.log(error);
 		res.status(500).json({
 			status: 'Failure',
 			message: error.message
@@ -69,16 +71,18 @@ const referDoctor = async (req, res) => {
 
 const getReferedAppointments = async (req, res) => {
 	try {
+		console.log(req.user);
 		const appointments = await Report.find({
-			referedDoctor: req.user.id
+			referedDoctor: req.user._id
 		}).populate('patientId');
+		console.log(appointments);
 		if (appointments) {
-			res.status(200).json({
+			return res.status(200).json({
 				status: 'success',
-				data: appointments
+				appointments
 			});
 		} else {
-			res.status(404).json({
+			return res.status(404).json({
 				status: 'error',
 				message: 'No Appointments Found'
 			});
