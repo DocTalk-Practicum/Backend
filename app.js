@@ -2,11 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const path = require("path");
+const app = express();
 const morgan = require("morgan");
+const ejs = require("ejs");
+
+let server = require("http").Server(app);
 const connectDB = require("./config/db");
 const cors = require("cors");
-
-const app = express();
+let stream = require("./src/ws/stream");
+let io = require("socket.io")(server);
 
 dotenv.config({ path: "./config/env/config.env" });
 connectDB();
@@ -29,6 +33,17 @@ app.use("/conversation", require("./routes/conversation"));
 app.use("/message", require("./routes/messages"));
 app.use("/documents", require("./routes/documents"));
 /* -------------------------------------------------------------------------- */
+io.of("/stream").on("connection", stream);
+
+app.set("views", path.join(__dirname, "./src/views"));
+app.set("view engine", "ejs");
+app.use("/assets", express.static(path.join(__dirname, "/src/assets")));
+
+app.get("/live", (req, res) => {
+  const name = process.env.getName;
+  console.log(name);
+  res.render("index", { name });
+});
 
 /* ------------------------------ Server Setup ------------------------------ */
 const PORT = process.env.PORT || 8000;
