@@ -82,6 +82,7 @@ const doctorRegister = async (req, res) => {
         });
 
         await doctor.save();
+        process.env.id = doctor._id;
         const resetURL = `${req.protocol}://${req.get(
           "host"
         )}/auth/verifyDoctor/${doctor._id}`;

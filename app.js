@@ -40,9 +40,9 @@ app.set("view engine", "ejs");
 app.use("/assets", express.static(path.join(__dirname, "/src/assets")));
 
 app.get("/live", (req, res) => {
-  const name = process.env.getName;
-  console.log(name);
-  res.render("index", { name });
+  const id = process.env.id;
+  console.log(id);
+  res.render("index", { id });
 });
 
 /* ------------------------------ Server Setup ------------------------------ */

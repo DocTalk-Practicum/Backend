@@ -10,6 +10,7 @@ const reportSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Doctor",
     },
+    meetLink: String,
     date: String,
     time: String,
     reasonForVisit: String,
@@ -17,14 +18,14 @@ const reportSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    referedDoctor:{
+    referedDoctor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Doctor",
     },
-    prescription:{
+    prescription: {
       type: Array,
       default: [],
-    }
+    },
   },
   { timestamps: true }
 );

@@ -63,19 +63,16 @@ window.addEventListener("load", () => {
         sessionStorage.setItem("username", yourName);
 
         //create room link
-        let roomLink = `${location.origin}/liveClass?room=${roomName
+        let roomLink = `${location.origin}/live?room=${roomName
           .trim()
           .replace(" ", "_")}_${helpers.generateRandomString()}`;
 
         // const id = process.env.id;
 
-        const res = await axios.post(
-          "https://class-hub-backend.herokuapp.com/teacher/getLink",
-          {
-            link: roomLink,
-            yourName, // This is the body part
-          }
-        );
+        const res = await axios.post("http://localhost:8000/teacher/getLink", {
+          link: roomLink,
+          yourName, // This is the body part
+        });
         console.log(res);
         //show message with link to room
         document.querySelector(
