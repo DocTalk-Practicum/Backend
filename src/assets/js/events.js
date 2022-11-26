@@ -63,13 +63,13 @@ window.addEventListener("load", () => {
         sessionStorage.setItem("username", yourName);
 
         //create room link
-        let roomLink = `${location.origin}/live?room=${roomName
+        let roomLink = `${location.origin}/live/${yourName}?room=${roomName
           .trim()
           .replace(" ", "_")}_${helpers.generateRandomString()}`;
 
         // const id = process.env.id;
 
-        const res = await axios.post("http://localhost:8000/teacher/getLink", {
+        const res = await axios.post("http://localhost:8000/doctor/getLink", {
           link: roomLink,
           yourName, // This is the body part
         });

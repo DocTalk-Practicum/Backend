@@ -39,9 +39,9 @@ app.set("views", path.join(__dirname, "./src/views"));
 app.set("view engine", "ejs");
 app.use("/assets", express.static(path.join(__dirname, "/src/assets")));
 
-app.get("/live", (req, res) => {
-  const id = process.env.id;
-  console.log(id);
+app.get("/live/:id", (req, res) => {
+  const id = req.params.id;
+  console.log("ID:",id);
   res.render("index", { id });
 });
 

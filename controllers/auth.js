@@ -183,6 +183,8 @@ const login = async (req, res, next) => {
               expiresIn: "2h",
             }
           );
+        process.env.id = doctor._id;
+        console.log("Shivansh", process.env.id);
           res.status(200).json({
             status: "success",
             message: "Logged In successfully",
@@ -236,16 +238,25 @@ const authPass = async (req, res, next) => {
   }
 
   if (!token || token === null || token == undefined) {
-    return res.status(200).json({
+    return res.status(400).json({
       message: "You aren't Logged In",
     });
   }
 
-  // 2) Verification token
-  const decoded = await jwt.verify(token, process.env.JWT_SECRET);
-  // console.log("This is decoded", decoded);
-
-  // 3) Check if user still exists
+  try {
+    decoded = await jwt.verify(token, process.env.JWT_SECRET)
+} catch (e) {
+    if (e instanceof jwt.JsonWebTokenError) {
+        return res.status(200).json({
+            status: "fail",
+            message: "Session expired"
+        })
+    }
+    return res.status(400).json({
+        status: "fail",
+        message: "An error occured"
+    })
+}
   const currentUser = await Patient.findById(decoded.id);
 
   if (!currentUser) {

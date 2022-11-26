@@ -21,6 +21,7 @@ const reportSchema = new mongoose.Schema(
     referedDoctor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Doctor",
+      default: null
     },
     prescription: {
       type: Array,

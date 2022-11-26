@@ -25,19 +25,24 @@ router.post(
 // router.get("/getDoctorById/:id", authPass, getDoctorById);
 
 router.post("/getLink", async (req, res) => {
-  const { link, id } = req.body;
+  const { link, yourName } = req.body;
   try {
-    const report = await Report.findOne({ DoctorId: id });
+    const id = yourName
+    console.log(id)
+    const report = await Report.findById( id);
     if (!report) {
-      return res.status(404).send("NO Teacher Found");
+      console.log("No doctor")
+      return res.status(404).send("NO Doctor Found");
     }
     report.meetLink = link;
     report.save();
+    console.log(report)
     res.status(200).json({
       msg: "Success",
       data: link,
     });
   } catch (error) {
+    console.log(error)
     return res.status(500).send(error);
   }
 });

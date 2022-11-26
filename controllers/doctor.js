@@ -44,15 +44,15 @@ const getAppointments = async (req, res) => {
 
 const referDoctor = async (req, res) => {
 	try {
+		console.log("DocID",req.body.docId);
 		const refered = await Doctor.findById(req.body.docId);
-		console.log(refered);
 		const report = await Report.findById(req.body.reportId);
 		report.referedDoctor = refered._id;
 		await report.save();
-		if (refered) {
+		if (report) {
 			res.status(200).json({
 				status: 'success',
-				data: refered
+				data: report
 			});
 		} else {
 			res.status(404).json({
